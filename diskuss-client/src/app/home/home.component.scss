@@ -1,0 +1,109 @@
+:host {
+  display: block;
+  background-color: #0b1f1a;
+  color: #e0f2e9;
+  min-height: 100vh;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.three-container {
+  position: absolute;
+  width: 100dvw;
+  height: 100dvh;
+  overflow: hidden;
+  background-color: #0b1f1a;
+
+  .three-canvas {
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+}
+
+.home-container {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  flex-direction: column;
+  width: 100%;
+  height: 100vh;
+}
+
+.header {
+  max-width: 600px;
+
+  background-color: rgba(0, 0, 0, 0.6);
+  border-radius: 20px;
+  padding: 2rem;
+
+  h1 {
+    font-size: 3rem;
+    margin-bottom: 0.5rem;
+
+    .brand {
+      color: #2ecc71; // bright green
+    }
+  }
+
+  .subtitle {
+    font-size: 1.2rem;
+    margin-bottom: 2rem;
+    color: #a5d6a7;
+  }
+
+  .actions {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+
+    .btn {
+      padding: 0.75rem 1.5rem;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background-color 0.3s;
+
+      &.primary {
+        background-color: #2ecc71;
+        color: #0b1f1a;
+
+        &:hover {
+          background-color: #27ae60;
+        }
+      }
+
+      &.secondary {
+        background-color: transparent;
+        border: 2px solid #2ecc71;
+        color: #2ecc71;
+
+        &:hover {
+          background-color: #14532d;
+        }
+      }
+    }
+  }
+}
+
+footer {
+  position: absolute;
+  bottom: 10px;
+  width: 100%;
+  text-align: center;
+  color: #a5d6a7;
+  font-size: 0.5rem;
+  font-style: italic;
+
+  a {
+    color: #2ecc71;
+    text-decoration: none;
+    font-size: 1rem;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
