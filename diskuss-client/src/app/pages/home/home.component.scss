@@ -1,4 +1,4 @@
-@import "../../assets/colors";
+@import "../../../assets/colors";
 
 :host {
   display: block;
@@ -13,7 +13,7 @@
   width: 100dvw;
   height: 100dvh;
   overflow: hidden;
-  background-color: #0b1f1a;
+  background-color: $background-color;
 
   .three-canvas {
     width: 100%;
@@ -89,14 +89,14 @@
     margin-bottom: 0.5rem;
 
     .brand {
-      color: #2ecc71; // bright green
+      color: $brand-color; // bright green
     }
   }
 
   .subtitle {
     font-size: 1.2rem;
     margin-bottom: 2rem;
-    color: #a5d6a7;
+    color: $light-brand-color;
   }
 
   .actions {
@@ -113,18 +113,18 @@
       transition: background-color 0.3s;
 
       &.primary {
-        background-color: #2ecc71;
-        color: #0b1f1a;
+        background-color: $brand-color;
+        color: $background-color;
 
         &:hover {
-          background-color: #27ae60;
+          background-color: $brand-color;
         }
       }
 
       &.secondary {
         background-color: transparent;
-        border: 2px solid #2ecc71;
-        color: #2ecc71;
+        border: 2px solid $brand-color;
+        color: $brand-color;
 
         &:hover {
           background-color: #14532d;
@@ -139,12 +139,12 @@ footer {
   bottom: 10px;
   width: 100%;
   text-align: center;
-  color: #a5d6a7;
+  color: $light-brand-color;
   font-size: 0.5rem;
   font-style: italic;
 
   a {
-    color: #2ecc71;
+    color: $brand-color;
     text-decoration: none;
     font-size: 1rem;
 

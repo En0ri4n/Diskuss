@@ -1,0 +1,19 @@
+<div class="login-container">
+  <form (ngSubmit)="onSubmit()" [formGroup]="loginForm">
+    <h2>Login</h2>
+
+    <label>Email</label>
+    <input formControlName="email" type="email" />
+
+    <label>Password</label>
+    <input formControlName="password" type="password" />
+
+    <button type="submit">Login</button>
+    <p *ngIf="errorMessage" class="error">{{ errorMessage }}</p>
+  </form>
+  <div class="actions">
+    <a routerLink="/login"><button class="btn secondary">Login</button></a>
+    <a>-</a>
+    <a routerLink="/home"><button class="btn primary">Home</button></a>
+  </div>
+</div>

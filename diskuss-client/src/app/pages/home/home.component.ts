@@ -1,10 +1,14 @@
 import { Component, ElementRef, AfterViewInit, ViewChild, OnDestroy } from '@angular/core';
 import * as THREE from 'three';
+import {RouterLink} from '@angular/router';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
+  imports: [
+    RouterLink
+  ]
 })
 export class HomeComponent implements AfterViewInit, OnDestroy {
   @ViewChild('canvas') private canvasRef!: ElementRef;
@@ -151,4 +155,6 @@ export class HomeComponent implements AfterViewInit, OnDestroy {
       cancelAnimationFrame(this.frameId);
     }
   }
+
+  protected readonly window = window;
 }
