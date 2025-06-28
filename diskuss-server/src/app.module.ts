@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import {Module, OnModuleInit} from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import {ConfigModule, ConfigService} from "@nestjs/config";
@@ -12,6 +12,7 @@ import {UserModule} from "./users/user.module";
 import {ChatModule} from "./chats/chat.module";
 import {MessageModule} from "./messages/message.module";
 import {NotificationModule} from "./notifications/notification.module";
+import {TestService} from "./test/test.service";
 
 @Module({
   imports: [
@@ -20,8 +21,16 @@ import {NotificationModule} from "./notifications/notification.module";
       ChatModule,
       MessageModule,
       NotificationModule,
-      ConfigModule.forRoot({ isGlobal: true }),
-      MongooseModule.forRoot('mongodb://home.enorian.dev/diskuss-db'),
+      ConfigModule.forRoot({ isGlobal: true,
+          envFilePath: '.env',
+      }),
+      MongooseModule.forRootAsync({
+          imports: [ConfigModule],
+          useFactory: (config: ConfigService) => ({
+              uri: `mongodb://${config.get('MONGODB_USERNAME')}:${encodeURIComponent(<string>config.get('MONGODB_PASSWORD'))}@${config.get('MONGODB_HOST')}:${config.get('MONGODB_PORT')}?retryWrites=true&w=majority`
+          }),
+          inject: [ConfigService],
+      }),
       MongooseModule.forFeature([
         { name: User.name, schema: UserSchema },
         { name: Message.name, schema: MessageSchema },
@@ -30,6 +39,15 @@ import {NotificationModule} from "./notifications/notification.module";
       ]),
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, TestService],
 })
-export class AppModule {}
+export class AppModule implements OnModuleInit {
+    constructor(private testService: TestService) {}
+
+    onModuleInit() {
+        const env = process.env.NODE_ENV || 'development';
+        console.log(`AppModule initialized in ${env} mode.`);
+
+        // this.testService.testSecretKey();
+    }
+}
