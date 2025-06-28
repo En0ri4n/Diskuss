@@ -6,5 +6,5 @@ export interface UserDto {
   updatedAt: Date;
   isActive: boolean;
   roles: string[];
-  profilePictureUrl?: string; // Optional field for user profile picture
+  profilePictureUrl?: string; // Optional field for users profile picture
 }
