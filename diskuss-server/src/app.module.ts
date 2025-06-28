@@ -11,6 +11,7 @@ import {AuthModule} from "./auth/auth.module";
 import {UserModule} from "./users/user.module";
 import {ChatModule} from "./chats/chat.module";
 import {MessageModule} from "./messages/message.module";
+import {NotificationModule} from "./notifications/notification.module";
 
 @Module({
   imports: [
@@ -18,6 +19,7 @@ import {MessageModule} from "./messages/message.module";
       UserModule,
       ChatModule,
       MessageModule,
+      NotificationModule,
       ConfigModule.forRoot({ isGlobal: true }),
       MongooseModule.forRoot('mongodb://home.enorian.dev/diskuss-db'),
       MongooseModule.forFeature([
