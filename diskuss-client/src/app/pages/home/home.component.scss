@@ -1,0 +1,32 @@
+@import '../../../assets/colors';
+
+.home-container {
+  max-width: 400px;
+  margin: 60px auto;
+  text-align: center;
+  padding: 32px;
+  background: $background-color;
+  border-radius: 12px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+}
+
+.home-actions {
+  margin-top: 24px;
+  display: flex;
+  justify-content: center;
+}
+
+.btn {
+  padding: 10px 24px;
+  border: none;
+  border-radius: 6px;
+  text-decoration: none;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.btn-primary {
+  background: #1976d2;
+  color: #fff;
+}

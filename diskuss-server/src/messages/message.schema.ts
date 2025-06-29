@@ -6,16 +6,13 @@ export type MessageDocument = Message & Document;
 @Schema({ timestamps: true })
 export class Message {
     @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'Chat', required: true })
-    chatId: mongoose.Types.ObjectId;
+    chatId: unknown;
 
     @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true })
     senderId: mongoose.Types.ObjectId;
 
     @Prop()
     text: string;
-
-    @Prop({ type: [mongoose.Schema.Types.ObjectId], ref: 'User', default: [] })
-    readBy: mongoose.Types.ObjectId[];
 
     @Prop({
         type: [

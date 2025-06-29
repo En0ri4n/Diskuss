@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import { AuthService } from '../../services/auth/auth.service';
 import {Router, RouterLink} from '@angular/router';
+import {NgIf} from '@angular/common';
 
 @Component({
   selector: 'app-login',
@@ -9,7 +10,8 @@ import {Router, RouterLink} from '@angular/router';
   styleUrls: ['./login.component.scss'],
   imports: [
     ReactiveFormsModule,
-    RouterLink
+    RouterLink,
+    NgIf
   ]
 })
 export class LoginComponent {
@@ -30,7 +32,7 @@ export class LoginComponent {
   onSubmit() {
     if (this.loginForm.valid) {
       this.authService.login(this.loginForm.value).subscribe({
-        next: () => this.router.navigate(['/chat']),
+        next: () => this.router.navigate(['/home']),
         error: err => this.errorMessage = err.error.message || 'Login failed'
       });
     }

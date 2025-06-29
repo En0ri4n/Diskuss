@@ -38,7 +38,7 @@ export class AuthService {
       email: dto.email,
       username: dto.username,
       password: dto.password,
-      profilePicUrl: 'default-user.png', // Default profile picture URL
+      profilePicUrl: 'default-users.png', // Default profile picture URL
     }).then(res => {
       const payload = { sub: res.user._id, email: res.user.email };
       return {

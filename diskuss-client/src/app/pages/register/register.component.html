@@ -1,19 +1,39 @@
 <div class="register-container">
-  <form (ngSubmit)="onSubmit()" [formGroup]="registerForm">
+  <form (ngSubmit)="onSubmit()" [formGroup]="registerForm" novalidate>
     <h2>Register</h2>
+
+    <label>Username</label>
+    <input formControlName="username" type="text" />
+    <div *ngIf="registerForm.get('username')?.invalid && registerForm.get('username')?.touched"
+    [class.error]="registerForm.get('username')?.invalid && registerForm.get('username')?.touched">
+      Username is required
+    </div>
 
     <label>Email</label>
     <input formControlName="email" type="email" />
+    <div *ngIf="registerForm.get('email')?.invalid && registerForm.get('email')?.touched"
+    [class.error]="registerForm.get('email')?.invalid && registerForm.get('email')?.touched">
+      Invalid email address
+    </div>
 
     <label>Password</label>
     <input formControlName="password" type="password" />
+    <div *ngIf="registerForm.get('password')?.errors?.['minlength']"
+         [class.error]="registerForm.get('password')?.errors?.['minlength']">
+      Password must be at least 6 characters
+    </div>
 
     <label>Confirm Password</label>
     <input formControlName="confirmPassword" type="password" />
+    <div *ngIf="registerForm.errors?.['mismatch'] && registerForm.get('confirmPassword')?.touched"
+      [class.error]="registerForm.errors?.['mismatch'] && registerForm.get('confirmPassword')?.touched">
+      Passwords do not match
+    </div>
 
     <button type="submit">Register</button>
     <p *ngIf="errorMessage" class="error">{{ errorMessage }}</p>
   </form>
+
   <div class="actions">
     <a routerLink="/login"><button class="btn secondary">Login</button></a>
     <a>-</a>

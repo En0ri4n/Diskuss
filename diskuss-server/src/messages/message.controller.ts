@@ -31,7 +31,7 @@ export class MessageController {
         return this.messageService.create(dto, senderId);
     }
 
-    @Get('chat/:chatId')
+    @Get('chats/:chatId')
     async getMessagesByChat(@Param('chatId') chatId: string) {
         return this.messageService.findByChat(chatId);
     }

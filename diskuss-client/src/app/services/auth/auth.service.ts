@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {BehaviorSubject, tap} from 'rxjs';
+import {BehaviorSubject, Observable, tap} from 'rxjs';
 import {HttpClient} from '@angular/common/http';
 import {AuthResponse} from './dto/auth-response.dto';
 import {config} from '../../config';
@@ -22,7 +22,7 @@ export class AuthService {
     return this.currentUserSubject.value;
   }
 
-  register(data: { username: string, email: string; password: string }) {
+  register(data: { username: string, email: string; password: string }): Observable<AuthResponse> {
     return this.http.post<AuthResponse>(`${this.API_URL}/register`, data).pipe(
       tap((res) => {
         this.handleAuth(res);
