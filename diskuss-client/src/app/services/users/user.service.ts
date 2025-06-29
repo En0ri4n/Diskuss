@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject, tap } from 'rxjs';
+import { BehaviorSubject, } from 'rxjs';
 import {config} from '../../config';
 import {AuthResponse} from '../auth/dto/auth-response.dto';
 
