@@ -1,28 +1,30 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ChatGateway } from '../../services/chats/chat.gateway';
 import {FormsModule} from '@angular/forms';
-import {NgForOf} from '@angular/common';
-import {MessageDto} from '../../services/messages/dto/message.dto';
+import {formatDate, NgForOf} from '@angular/common';
+import {ChatMessageComponent} from '../chat-message/chat-message.component';
+import {IncomingMessageDto} from '../../services/messages/dto/message.dto';
 
 @Component({
   selector: 'app-chat',
   templateUrl: './chat.component.html',
   imports: [
     FormsModule,
-    NgForOf
+    NgForOf,
+    ChatMessageComponent
   ],
   styleUrls: ['./chat.component.scss']
 })
 export class ChatComponent implements OnInit, OnDestroy {
-  messages: any[] = [];
+  messages: IncomingMessageDto[] = [];
   message: string = '';
 
   constructor(private chatService: ChatGateway) {}
 
   ngOnInit() {
-    this.chatService.onNewMessage((msg: MessageDto) => {
+    this.chatService.onNewMessage((msg: IncomingMessageDto) => {
       console.log(msg)
-      this.messages.push(`${msg.senderId}: ${msg.text}`);
+      this.messages.push(msg);
     });
   }
 
@@ -40,4 +42,6 @@ export class ChatComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.chatService.disconnect();
   }
+
+  protected readonly formatDate = formatDate;
 }
