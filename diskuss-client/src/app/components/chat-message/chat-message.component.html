@@ -1,0 +1,14 @@
+<div class="chat-message-container" [ngClass]="{'outgoing': fromSelf, 'incoming': !fromSelf}">
+  <img class="avatar" [src]="avatarUrl" alt="User avatar">
+
+  <div class="message-bubble">
+    <div class="message-meta">
+      <span class="username">{{ username }}</span>
+      <span class="separator">&nbsp;</span>
+      <span class="timestamp">{{ createdAt }}</span>
+    </div>
+    <div class="message-text">
+      {{ message }}
+    </div>
+  </div>
+</div>

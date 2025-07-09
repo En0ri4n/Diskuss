@@ -1,0 +1,71 @@
+@import "../../../assets/colors";
+
+.chat-message-container {
+  display: flex;
+  align-items: flex-end;
+  margin: 0.75rem 1rem;
+  max-width: 80%;
+
+  &.incoming {
+    flex-direction: row;
+
+    .message-bubble {
+      background-color: $secondary-background-color;
+      border-top-left-radius: 0;
+    }
+
+    .avatar {
+      margin-right: 0.75rem;
+    }
+  }
+
+  &.outgoing {
+    flex-direction: row-reverse;
+    align-self: flex-end;
+    margin-left: auto;
+
+    .message-bubble {
+      background-color: $button-color;
+      border-top-right-radius: 0;
+    }
+
+    .avatar {
+      margin-left: 0.75rem;
+    }
+  }
+
+  .avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: 2px solid $light-brand-color;
+  }
+
+  .message-bubble {
+    padding: 0.75rem 1rem;
+    border-radius: 1rem;
+    color: $text-color;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+    display: flex;
+    flex-direction: column;
+    max-width: 100%;
+    word-wrap: break-word;
+
+    .message-meta {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.75rem;
+      color: $light-brand-color;
+      margin-bottom: 0.25rem;
+
+      .username {
+        font-weight: 600;
+      }
+    }
+
+    .message-text {
+      font-size: 1rem;
+      line-height: 1.4;
+    }
+  }
+}
