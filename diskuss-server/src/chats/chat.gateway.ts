@@ -50,18 +50,6 @@ export class ChatGateway implements OnGatewayInit, OnGatewayConnection, OnGatewa
         console.log(`Client disconnected: ${client.id}`);
     }
 
-    getUserFromSocket(client: Socket): void {
-        const token = client.handshake.auth.token || client.handshake.headers['authorization']?.split(' ')[1];
-        if (!token) {
-            throw new UnauthorizedException('No token provided');
-        }
-        const decoded = this.jwtService.verify(token);
-        if (!decoded || !decoded.userId) {
-            throw new UnauthorizedException('Invalid token');
-        }
-        client.data.user = decoded; // attach users to socket
-    }
-
     @SubscribeMessage('sendMessage')
     async handleMessage(
         @MessageBody()
@@ -71,17 +59,11 @@ export class ChatGateway implements OnGatewayInit, OnGatewayConnection, OnGatewa
         const senderId = client.data.user?.userId;
         if (!senderId) return;
 
-        this.getUserFromSocket(client);
-
-        console.log(`Received message from user ${client.data.user.email}:`, message);
-
         const savedMessage: Message = await this.chatService.saveMessage({
             chatId: message.chatId,
             text: message.text,
             senderId: senderId
         });
-
-        console.log('Message saved:', savedMessage);
 
         this.server.emit('newMessage', savedMessage);
     }

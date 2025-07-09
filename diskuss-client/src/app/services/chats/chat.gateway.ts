@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { io, Socket } from 'socket.io-client';
-import {MessageDto} from '../messages/dto/message.dto';
+import {IncomingMessageDto, MessageDto} from '../messages/dto/message.dto';
 
 @Injectable({
   providedIn: 'root',
@@ -23,7 +23,7 @@ export class ChatGateway {
     this.socket.emit('sendMessage', message);
   }
 
-  onNewMessage(callback: (msg: MessageDto) => void) {
+  onNewMessage(callback: (msg: IncomingMessageDto) => void) {
     this.socket.on('newMessage', callback);
   }
 
