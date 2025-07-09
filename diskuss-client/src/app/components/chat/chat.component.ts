@@ -2,6 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ChatGateway } from '../../services/chats/chat.gateway';
 import {FormsModule} from '@angular/forms';
 import {NgForOf} from '@angular/common';
+import {MessageDto} from '../../services/messages/dto/message.dto';
 
 @Component({
   selector: 'app-chat',
@@ -19,16 +20,16 @@ export class ChatComponent implements OnInit, OnDestroy {
   constructor(private chatService: ChatGateway) {}
 
   ngOnInit() {
-    this.chatService.onNewMessage((msg) => {
-      this.messages.push(msg);
+    this.chatService.onNewMessage((msg: MessageDto) => {
+      console.log(msg)
+      this.messages.push(`${msg.senderId}: ${msg.text}`);
     });
   }
 
   sendMessage() {
     if (this.message.trim()) {
-      // Remplacez les valeurs par les vraies données de votre app
       this.chatService.sendMessage({
-        chatId: '12345',
+        chatId: 'default',
         text: this.message,
         senderId: '67890'
       });

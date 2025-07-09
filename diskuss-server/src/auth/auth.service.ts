@@ -22,7 +22,7 @@ export class AuthService {
   }
 
   async login(user: any) {
-    const payload = { sub: user._id, email: user.email };
+    const payload = { userId: user._id, email: user.email, username: user.username };
     return {
       access_token: this.jwtService.sign(payload),
       user: {
@@ -40,7 +40,7 @@ export class AuthService {
       password: dto.password,
       profilePicUrl: 'default-users.png', // Default profile picture URL
     }).then(res => {
-      const payload = { sub: res.user._id, email: res.user.email };
+      const payload = { userId: res.user._id, email: res.user.email, username: res.user.username };
       return {
         user: {
           _id: res.user._id,

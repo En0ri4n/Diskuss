@@ -7,10 +7,10 @@ import {
     MessageBody,
     ConnectedSocket,
 } from '@nestjs/websockets';
-import { Server, Socket } from 'socket.io';
-import { ChatService } from './chat.service';
-import { JwtService } from '@nestjs/jwt';
-import { UnauthorizedException } from '@nestjs/common';
+import {Server, Socket} from 'socket.io';
+import {ChatService} from './chat.service';
+import {JwtService} from '@nestjs/jwt';
+import {UnauthorizedException} from '@nestjs/common';
 import {Message} from "../messages/message.schema";
 
 @WebSocketGateway({
@@ -18,16 +18,17 @@ import {Message} from "../messages/message.schema";
         origin: '*',
     },
 })
-export class ChatGateway implements OnGatewayInit, OnGatewayConnection, OnGatewayDisconnect
-{
+export class ChatGateway implements OnGatewayInit, OnGatewayConnection, OnGatewayDisconnect {
+    private server: Server;
+
     constructor(
         private readonly chatService: ChatService,
         private readonly jwtService: JwtService,
-    ) {}
-
-    server: Server;
+    ) {
+    }
 
     afterInit(server: Server) {
+        this.server = server;
         console.log('WebSocket initialized');
     }
 
@@ -55,7 +56,7 @@ export class ChatGateway implements OnGatewayInit, OnGatewayConnection, OnGatewa
             throw new UnauthorizedException('No token provided');
         }
         const decoded = this.jwtService.verify(token);
-        if (!decoded || !decoded.sub) {
+        if (!decoded || !decoded.userId) {
             throw new UnauthorizedException('Invalid token');
         }
         client.data.user = decoded; // attach users to socket
@@ -67,16 +68,20 @@ export class ChatGateway implements OnGatewayInit, OnGatewayConnection, OnGatewa
         message: { chatId: string; text: string },
         @ConnectedSocket() client: Socket,
     ) {
-        const senderId = client.data.user?.sub;
+        const senderId = client.data.user?.userId;
         if (!senderId) return;
 
-        await this.getUserFromSocket(client);
+        this.getUserFromSocket(client);
+
+        console.log(`Received message from user ${client.data.user.email}:`, message);
 
         const savedMessage: Message = await this.chatService.saveMessage({
             chatId: message.chatId,
             text: message.text,
-            senderId: client.data.user._id
+            senderId: senderId
         });
+
+        console.log('Message saved:', savedMessage);
 
         this.server.emit('newMessage', savedMessage);
     }

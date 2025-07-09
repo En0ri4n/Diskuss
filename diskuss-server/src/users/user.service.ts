@@ -40,7 +40,7 @@ export class UserService {
 
     const user = await createdUser.save();
 
-    const payload = { sub: user._id, email: user.email };
+    const payload = { userId: user._id, email: user.email, username: user.username };
     const token = this.jwtService.sign(payload);
 
     return {

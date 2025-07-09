@@ -7,21 +7,34 @@ import {Message} from "../messages/message.schema";
 
 @Injectable()
 export class ChatService {
+    mainChatName: string = 'Home Chat'; // Default chat name
+
     constructor(@InjectModel(Chat.name) private chatModel: Model<Chat>,
                 @InjectModel(Message.name) private messageModel: Model<Message>
     ) {}
 
     async saveMessage(message: Partial<Message>): Promise<Message> {
-        const defaultChatId = 'default'; // Replace with your default chats ID logic
-        const defaultChatExists = await this.chatModel.exists({ _id: defaultChatId });
+        if (!message.chatId) {
+            throw new NotFoundException('Chat ID is required');
+        }
+        const defaultChatExists = await this.chatModel.exists({ name: this.mainChatName });
         if (!defaultChatExists) {
             // Create default chats if it doesn't exist
             const chat = await this.chatModel.create({
                 participants: [],
-                name: 'Home Chat',
+                name: this.mainChatName,
             });
 
             message.chatId = chat._id;
+        }
+
+        if (message.chatId == 'default') {
+            const defaultChat = await this.chatModel.findOne({ name: this.mainChatName });
+            if (defaultChat) {
+                message.chatId = defaultChat._id;
+            } else {
+                throw new NotFoundException('Default chat not found');
+            }
         }
 
         const chatExists = await this.chatModel.exists({ _id: message.chatId });
